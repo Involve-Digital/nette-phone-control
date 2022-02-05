@@ -1,0 +1,70 @@
+.phone-control-region-code {
+  display: block;
+  position: absolute;
+  margin-top: 18px !important;
+  margin-left: 10px !important;
+  z-index: 15;
+  list-style-type: none;
+  font-size: 14px;
+  &:hover {
+    cursor: pointer;
+  }
+  li.phone-control-selected {
+    input[type="tel"] {
+      all: revert !important;
+      height: 12px !important;
+      width: 25px !important;
+      max-width: 25px !important;
+      font-size: 12px !important;
+      margin-top: 0 !important;
+    }
+  }
+  li {
+    padding-left: 4px;
+    padding-right: 4px;
+    &:first-child {
+      z-index: 20;
+    }
+    &:nth-child(2) {
+      border-top: 1px solid lightgrey;
+    }
+    &:last-child {
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+      border-bottom: 1px solid rgba(99,99,99,0.05);
+    }
+    &:not(:first-child) {
+      display: none;
+      background-color: white;
+      border-left: 1px solid rgba(99,99,99,0.05);
+      border-right: 1px solid rgba(99,99,99,0.05);
+      z-index: 25 !important;
+      padding-left: 3px;
+      padding-right: 3px;
+      img {
+        margin-left: 5px;
+      }
+      &:hover {
+        background-color: rgb(184, 233, 134);
+        color: white;
+      }
+    }
+  }
+  .ai-arrow-down {
+    margin-left: 4px;
+  }
+  li.phone-control-other {
+    border-top: 1px solid lightgrey;
+    text-align: center;
+  }
+}
+.phone-control-region-code.disabled {
+  display: none;
+}
+.phone-control-region-code.phone-control-active {
+  li {
+    &:not(:first-child) {
+      display: block;
+    }
+  }
+}
