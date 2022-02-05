@@ -1,0 +1,30 @@
+{
+  "name": "involve-digital/phone-input",
+  "description": "Phone input control for Nette Framework",
+  "version": "1.0",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Ondřej Tölg",
+      "email": "ondrej.tolg@involve.cz"
+    }
+  ],
+  "license": [
+    "LGPL-2.1",
+    "LGPL-3.0"
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.2.0",
+    "nette/di": "^2.4",
+    "nette/forms": "^2.4",
+    "nette/utils": "^2.4",
+    "giggsey/libphonenumber-for-php": "^8.12.26"
+  },
+  "require-dev": {
+    "tracy/tracy": "^2.4"
+  },
+  "autoload": {
+    "classmap": ["src/"]
+  }
+}
