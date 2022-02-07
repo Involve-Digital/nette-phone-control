@@ -15,7 +15,8 @@ use Nette\Utils\Strings;
 class PhoneControl extends TextInput
 {
 
-    public const OUTPUT_FORMAT_PHONENUMBER_OBJECT = -2;
+    public const OUTPUT_FORMAT_PHONENUMBER_OBJECT = -3;
+    public const OUTPUT_FORMAT_GET_NATIONAL_NUMBER = -2;
     public const OUTPUT_FORMAT_RAW = -1;
 
     public const DEFAULT_REGEX = '^[+]?[0-9 ()-]*$';
@@ -207,14 +208,14 @@ class PhoneControl extends TextInput
 
                 if ($phoneNumberUtil->isValidNumberForRegion($phoneNumber, $region)) {
                     if ($this->outputFormat === self::OUTPUT_FORMAT_PHONENUMBER_OBJECT) {
-                        if (!$this->outputFormatWhitespaces) {
-                            return preg_replace('/\s+/', '', $phoneNumber);
-                        }
-
                         return $phoneNumber;
                     }
 
-                    $value = $phoneNumberUtil->format($phoneNumber, $this->outputFormat);
+                    if ($this->outputFormat === self::OUTPUT_FORMAT_GET_NATIONAL_NUMBER) {
+                        $value = $phoneNumber->getNationalNumber();
+                    } else {
+                        $value = $phoneNumberUtil->format($phoneNumber, $this->outputFormat);
+                    }
 
                     if (!$this->outputFormatWhitespaces) {
                         return preg_replace('/\s+/', '', $value);
@@ -227,14 +228,14 @@ class PhoneControl extends TextInput
             $phoneNumber = $phoneNumberUtil->parse(self::getPhoneWithRegionCode($this));
 
             if ($this->outputFormat === self::OUTPUT_FORMAT_PHONENUMBER_OBJECT) {
-                if (!$this->outputFormatWhitespaces) {
-                    return preg_replace('/\s+/', '', $phoneNumber);
-                }
-
                 return $phoneNumber;
             }
 
-            $value = $phoneNumberUtil->format($phoneNumber, $this->outputFormat);
+            if ($this->outputFormat === self::OUTPUT_FORMAT_GET_NATIONAL_NUMBER) {
+                $value = $phoneNumber->getNationalNumber();
+            } else {
+                $value = $phoneNumberUtil->format($phoneNumber, $this->outputFormat);
+            }
 
             if (!$this->outputFormatWhitespaces) {
                 return preg_replace('/\s+/', '', $value);
