@@ -26,7 +26,11 @@ class PhoneControlExtension extends CompilerExtension
 
         $config = $this->getConfig() + $this->defaults;
 
-        if ($config['outputFormat'] instanceof Statement && $config['outputFormat']->getEntity() === '::constant') {
+        // backwards compatibility
+        $isConstant = $config['outputFormat'] instanceof \Nette\DI\Statement && $config['outputFormat']->getEntity() === '::constant'
+            || $config['outputFormat'] instanceof \Nette\DI\Definitions\Statement && $config['outputFormat']->getEntity() === 'constant';
+
+        if ($isConstant) {
             $config['outputFormat'] = constant(reset($config['outputFormat']->arguments));
         }
 
