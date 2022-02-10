@@ -13,7 +13,7 @@
   "homepage": "https://github.com/Involve-Digital/phone-control",
   "author": "Ondřej Tölg",
   "license": "BSD-3-Clause",
-  "main": "src/assets/js/nettePhoneControl.js",
+  "main": "src/assets/js/phoneControl.js",
   "files": [
     "src/assets"
   ],
