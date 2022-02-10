@@ -1,6 +1,6 @@
 {
-  "name": "nette-phone-control",
-  "version": "v0.1.7",
+  "name": "phone-control",
+  "version": "v0.1.8",
   "description": "Client side script for Nette Forms Phone Control component",
   "keywords": [
     "nette",
@@ -10,7 +10,7 @@
     "input",
     "control"
   ],
-  "homepage": "https://github.com/Involve-Digital/nette-phone-control",
+  "homepage": "https://github.com/Involve-Digital/phone-control",
   "author": "Ondřej Tölg",
   "license": "BSD-3-Clause",
   "main": "src/assets/js/nettePhoneControl.js",
@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Involve-Digital/nette-phone-control.git"
+    "url": "git+https://github.com/Involve-Digital/phone-control.git"
   },
   "dependencies": {
     "libphonenumber-js": "^1.9.47"
