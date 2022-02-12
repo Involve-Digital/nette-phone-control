@@ -142,6 +142,8 @@ How does it work?
 4. on select of option "other", additional input for other region code is added
 5. on typed "+" sign in phone input, dropdown is hidden as it is pressumed, that user will enter region code number in main imput
 
+Everything is written in vanilla JS.
+
 ```html
 <script src="netteForms.js"></script>
 <script src="phone-control.js"></script>
