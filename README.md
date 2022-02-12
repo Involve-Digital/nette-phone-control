@@ -48,7 +48,7 @@ forms.phoneControl:
     expectedRegions: [CZ, SK] # regions that we expect will be typed, but other regions are not restricted
     outputFormat: constant(libphonenumber\PhoneNumberFormat::E164) # output format
     outputFormatWhitespaces: true # set to false, if you want to trim whitespaces in output phone number
-    regex: constant(PhoneControl::DEFAULT_REGEX) # first degree of protection, you can specify your own regex here
+    regex: constant(Involve\Forms\Controls\PhoneControl::DEFAULT_REGEX) # first degree of protection, you can specify your own regex here
 ```
 
 <small>Note: in older Nette use `::constant()` instead of `constant()`</small>
