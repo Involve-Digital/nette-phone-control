@@ -28,7 +28,8 @@
     'flag': true,
     'otherText': '-jiné-',
     'singleOptionPaddingOffset': 15,
-    'multiOptionsPaddingOffset': 20
+    'multiOptionsPaddingOffset': 20,
+    'dropdownChevronTopOffset': 8
   };
 
   PhoneControl.initOnLoad = function () {
@@ -88,7 +89,7 @@
     var regionCodesList = document.createElement('ul');
     var regionCodeContent = '';
 
-    var svg = '<svg style="display:inline;position:relative;width:10px;top:1px;left:4px;" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">\n' + '<g><path d="M961.2,236.5c-38.4-38.4-101.2-38.4-139.6,0L500,558L178.4,236.5c-38.4-38.4-101.2-38.4-139.6,0C0.4,274.9,0.4,337.6,38.8,376l388.1,388.1c20,20,46.8,29,73.1,28.1c26.5,0.9,53.1-8.1,73.1-28.1L961.3,376C999.6,337.6,999.6,274.8,961.2,236.5z"/></g>\n' + '</svg>';
+    var svg = '<svg style="display:inline;position:relative;width:10px;vertical-align:top;top:' + PhoneControl.options.dropdownChevronTopOffset + 'px;left:4px;" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">\n' + '<g><path d="M961.2,236.5c-38.4-38.4-101.2-38.4-139.6,0L500,558L178.4,236.5c-38.4-38.4-101.2-38.4-139.6,0C0.4,274.9,0.4,337.6,38.8,376l388.1,388.1c20,20,46.8,29,73.1,28.1c26.5,0.9,53.1-8.1,73.1-28.1L961.3,376C999.6,337.6,999.6,274.8,961.2,236.5z"/></g>\n' + '</svg>';
 
     for (var j = 0; j < regionCodes.length; j++) {
       if (j === 0) {
@@ -124,7 +125,10 @@
 
       var regionCodesLists = document.querySelectorAll('.phone-control-region-code');
 
+      var zIndex = 999;
       for (var i = 0; i < regionCodesLists.length; i++) {
+        regionCodesLists[i].style.zIndex = zIndex--;
+
         if (regionCodesLists[i] === regionCodesList) {
           continue;
         }
@@ -174,10 +178,10 @@
 
     phoneControl.oninput = phoneControl.onchange = phoneControl.onpaste = phoneControl.onkeyup = function (e) {
       if (this.value.includes('+')) {
-        regionCodesList.classList.add('disabled');
+        regionCodesList.classList.add('phone-control-disabled');
         PhoneControl.setRegionCodeControlValue(null, regionCodeControl, selected);
       } else {
-        regionCodesList.classList.remove('disabled');
+        regionCodesList.classList.remove('phone-control-disabled');
         PhoneControl.setRegionCodeControlValue(undefined, regionCodeControl, selected);
       }
 
@@ -193,16 +197,16 @@
 
     if (phoneControl.value.includes('+')) {
       PhoneControl.setRegionCodeControlValue(null, regionCodeControl, selected);
-      regionCodesList.classList.add('disabled');
+      regionCodesList.classList.add('phone-control-disabled');
     } else if (regionCodeControl.value) {
       var value = regionCodeControl.value;
 
       PhoneControl.setRegionCodeControlValue(value, regionCodeControl, selected);
 
       if (regionCodes.includes(value.replace('+', ''))) {
-        selected.innerText = value;
+        selected.innerHTML = value + (singleOption ? '' : svg);
       } else {
-        selected.innerHTML = '+<input type="tel" value="' + value.replace('+', '') + '">';
+        selected.innerHTML = '+<input type="tel" value="' + value.replace('+', '') + '">' + (singleOption ? '' : svg);
       }
     } else {
       PhoneControl.setRegionCodeControlValue(undefined, regionCodeControl, selected);
@@ -258,6 +262,11 @@
   PhoneControl.adjustPhoneControlPadding = function (phoneControl, regionCodesList) {
     var singleOption = PhoneControl.hasSingleOption(phoneControl);
 
+    if (regionCodesList.classList.contains('phone-control-disabled')) {
+      phoneControl.style.paddingLeft = null;
+      return;
+    }
+
     phoneControl.style.paddingLeft = (regionCodesList.offsetWidth + (singleOption ? PhoneControl.options.singleOptionPaddingOffset : PhoneControl.options.multiOptionsPaddingOffset)) + 'px';
   };
 
@@ -278,8 +287,12 @@
   PhoneControl.getRegionCodeControlByPhoneControl = function (phoneControl) {
     var phoneControlName = phoneControl.getAttribute('name');
 
+    if (phoneControlName.includes(']')) {
+      phoneControlName = phoneControlName.substring(phoneControlName.length - 1);
+    }
+
     return phoneControl.closest('form').querySelector(
-      '[name*="' + phoneControlName.substring(0, phoneControlName.length - 1) + '"][name*="RegionCode"]'
+      '[name*="' + phoneControlName + '"][name*="RegionCode"]'
     );
   };
 

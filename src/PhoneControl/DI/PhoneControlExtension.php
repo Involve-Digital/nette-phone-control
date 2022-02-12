@@ -26,13 +26,8 @@ class PhoneControlExtension extends CompilerExtension
 
         $config = $this->getConfig() + $this->defaults;
 
-        // backwards compatibility
-        $isConstant = $config['outputFormat'] instanceof \Nette\DI\Statement && $config['outputFormat']->getEntity() === '::constant'
-            || $config['outputFormat'] instanceof \Nette\DI\Definitions\Statement && $config['outputFormat']->getEntity() === 'constant';
-
-        if ($isConstant) {
-            $config['outputFormat'] = constant(reset($config['outputFormat']->arguments));
-        }
+        $config['outputFormat'] = $this->getValueFromConstantIfNeeded($config['outputFormat']);
+        $config['regex'] = $this->getValueFromConstantIfNeeded($config['regex']);
 
         Validators::assert($config['allowedRegions'], 'null|array|string', 'Whitelisted phone number regions.');
         Validators::assert($config['expectedRegions'], 'null|array|string', 'Expected phone number from entered regions. No need to enter regions code.');
@@ -44,6 +39,19 @@ class PhoneControlExtension extends CompilerExtension
 
         $initialize = $class->methods['initialize'];
         $initialize->addBody('Involve\Forms\Controls\PhoneControl::register(?, ?, ?, ?, ?);', array_values($config));
+    }
+
+    private function getValueFromConstantIfNeeded($valueRaw)
+    {
+        // backward compatibility
+        $isConstant = $valueRaw instanceof \Nette\DI\Statement && $valueRaw->getEntity() === '::constant'
+            || $valueRaw instanceof \Nette\DI\Definitions\Statement && $valueRaw->getEntity() === 'constant';
+
+        if ($isConstant) {
+            $value = constant(reset($valueRaw->arguments));
+        }
+
+        return $value ?? $valueRaw;
     }
 
 }

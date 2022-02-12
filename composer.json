@@ -1,7 +1,7 @@
 {
   "name": "involve-digital/phone-control",
   "description": "Extension for Nette forms adding phone input with \"libphonenumber\" library validation.",
-  "version": "v0.1.8",
+  "version": "v1.0.0",
   "type": "library",
   "authors": [
     {

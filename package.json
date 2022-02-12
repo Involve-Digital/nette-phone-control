@@ -1,6 +1,6 @@
 {
   "name": "phone-control",
-  "version": "v0.1.8",
+  "version": "v1.0.0",
   "description": "Client side script for Nette Forms Phone Control component",
   "keywords": [
     "nette",
@@ -22,6 +22,7 @@
     "url": "git+https://github.com/Involve-Digital/phone-control.git"
   },
   "dependencies": {
+    "nette-forms": "^3.3.1",
     "libphonenumber-js": "^1.9.47"
   }
 }
