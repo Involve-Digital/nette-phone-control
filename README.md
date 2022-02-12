@@ -51,6 +51,8 @@ forms.phoneControl:
     regex: constant(PhoneControl::DEFAULT_REGEX) # first degree of protection, you can specify your own regex here
 ```
 
+<small>Note: in older Nette use `::constant()` instead of `constant()`</small>
+
 Let's have number `+420 608 343 634` number as an example.
 <br>
 Allowed values for `outputFormat` field are:
